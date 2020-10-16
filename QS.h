@@ -1,4 +1,5 @@
-#pragma once
+#ifndef QS_H_
+#define QS_H_
 
 #include "QSInterface.h"
 
@@ -121,8 +122,11 @@ public:
 	*/
 	void clear();
 	void bubbleSortThree(int left, int middle, int right);
+	void quicksort(int left, int right);
 protected:
 	int* arrayptr;
 	int currentInsertPosition;
 	int maxCapacity;
 };
+
+#endif

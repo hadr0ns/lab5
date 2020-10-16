@@ -12,7 +12,21 @@ QS::QS() {
 * Does nothing if the array is empty.
 */
 void QS::sortAll(){
+	if (arrayptr != 0){
+		quicksort(0, currentInsertPosition-1);
+	}
 
+}
+
+void QS::quicksort(int left, int right){
+	if ((right-left)<1){
+		return;
+	} else {
+		int pivot = medianOfThree(left, right);
+		pivot = partition(left, right, pivot);
+		quicksort(left, pivot-1);
+		quicksort(pivot+1, right);
+	}
 }
 
 /*
@@ -79,7 +93,43 @@ int QS::medianOfThree(int left, int right){
 * 		provided with bad input
 */
 int QS::partition(int left, int right, int pivotIndex){
+	if (arrayptr == 0){
+		return -1;
+	}
+	if (left < 0 || right >= currentInsertPosition){
+		return -1;
+	}
+	if (left>=right){
+		return -1;
+	}
+	if (left>pivotIndex || right<pivotIndex){
+		return -1;
+	}
+	int tmp = arrayptr[left];
+	arrayptr[left] = arrayptr[pivotIndex];
+	arrayptr[pivotIndex] = tmp;
+	int up;
+	int down;
+	up = left+1;
+	down = right;
+	do {
+		while ((arrayptr[up]<=arrayptr[left]) && (up<right)){
+			up++;
+		}
+		while ((arrayptr[down]>arrayptr[left]) && (down>left)){
+			down--;
+		}
+		if (up < down){
+			int tmp = arrayptr[up];
+			arrayptr[up] = arrayptr[down];
+			arrayptr[down] = tmp;
+		}
 
+	} while (up < down);
+	int tmp2 = arrayptr[left];
+	arrayptr[left] = arrayptr[down];
+	arrayptr[down] = tmp2;
+	return down;
 }
 
 /*getArray()
